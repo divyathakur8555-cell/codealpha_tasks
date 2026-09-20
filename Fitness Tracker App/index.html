@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FitTrack – Simple Fitness Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1>FitTrack</h1>
+      <p class="subtitle">Your friendly fitness companion</p>
+    </header>
+
+    <nav class="nav">
+      <button class="nav-btn active" data-tab="dashboard">Dashboard</button>
+      <button class="nav-btn" data-tab="workout">Log Workout</button>
+      <button class="nav-btn" data-tab="steps">Track Steps</button>
+      <button class="nav-btn" data-tab="history">My Journey</button>
+    </nav>
+
+    <!-- Dashboard -->
+    <section id="dashboard" class="tab active">
+      <div class="welcome-card">
+        <h2 id="greeting">Hey there 👋</h2>
+        <p>Let’s see how you’re doing today.</p>
+      </div>
+
+      <div class="metrics">
+        <div class="metric">
+          <h3>Steps today</h3>
+          <p class="metric-value" id="dash-steps">0</p>
+          <p class="metric-sub">of your <span id="goal-steps-label">10,000</span> step goal</p>
+          <div class="progress-bar">
+            <div class="progress-fill" id="steps-progress"></div>
+          </div>
+          <p class="percent" id="steps-percent">0%</p>
+        </div>
+
+        <div class="metric">
+          <h3>Calories burned</h3>
+          <p class="metric-value" id="dash-calories">0</p>
+          <p class="metric-sub">of your <span id="goal-calories-label">500</span> kcal goal</p>
+          <div class="progress-bar">
+            <div class="progress-fill" id="calories-progress"></div>
+          </div>
+          <p class="percent" id="calories-percent">0%</p>
+        </div>
+
+        <div class="metric">
+          <h3>Active minutes</h3>
+          <p class="metric-value"><span id="dash-workout">0</span> min</p>
+          <p class="metric-sub">of your <span id="goal-workout-label">60</span> minute goal</p>
+          <div class="progress-bar">
+            <div class="progress-fill" id="workout-progress"></div>
+          </div>
+          <p class="percent" id="workout-percent">0%</p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Recent activity</h3>
+        <div id="recent-feed"></div>
+      </div>
+    </section>
+
+    <!-- Workout -->
+    <section id="workout" class="tab">
+      <div class="form-card">
+        <h2>Log your workout</h2>
+        <form id="workout-form">
+          <div class="form-group">
+            <label for="exercise-type">What did you do?</label>
+            <select id="exercise-type" required>
+              <option value="">Choose…</option>
+              <option value="Running">Running</option>
+              <option value="Walking">Walking</option>
+              <option value="Cycling">Cycling</option>
+              <option value="Swimming">Swimming</option>
+              <option value="Weight Training">Weight training</option>
+              <option value="Yoga">Yoga</option>
+              <option value="HIIT">HIIT</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="duration">Duration (minutes)</label>
+              <input type="number" id="duration" min="1" placeholder="e.g. 30" required>
+            </div>
+
+            <div class="form-group">
+              <label for="calories">Calories burned</label>
+              <input type="number" id="calories" min="1" placeholder="e.g. 250" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="notes">Notes (optional)</label>
+            <textarea id="notes" rows="3" placeholder="How did it feel?"></textarea>
+          </div>
+
+          <button type="submit" class="btn">Save workout</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Steps -->
+    <section id="steps" class="tab">
+      <div class="form-card">
+        <h2>Track your steps</h2>
+        <form id="steps-form">
+          <div class="form-group">
+            <label for="steps-input">Add steps</label>
+            <input type="number" id="steps-input" min="1" placeholder="e.g. 3000">
+          </div>
+          <button type="submit" class="btn">Add steps</button>
+
+          <div class="quick-add">
+            <p>Quick add</p>
+            <div class="quick-buttons">
+              <button type="button" class="quick-btn" data-steps="1000">+1,000</button>
+              <button type="button" class="quick-btn" data-steps="2500">+2,500</button>
+              <button type="button" class="quick-btn" data-steps="5000">+5,000</button>
+            </div>
+          </div>
+        </form>
+
+        <div class="panel" style="margin-top:20px;">
+          <h3>Today’s steps</h3>
+          <p class="metric-value" id="steps-display">0</p>
+          <div class="progress-bar">
+            <div class="progress-fill" id="steps-bar-fill"></div>
+          </div>
+          <p class="percent" id="steps-bar-percent">0%</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- History -->
+    <section id="history" class="tab">
+      <div class="panel">
+        <h2>My journey</h2>
+        <div id="history-list"></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
