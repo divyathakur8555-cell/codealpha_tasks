@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Astrex - Language Learning App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div>
+        <h1>🌍 Astrex</h1>
+        <p class="subtitle">Your daily language companion</p>
+      </div>
+      <div class="header-actions">
+        <select id="language-select" class="lang-select">
+          <option value="spanish">🇪🇸 Spanish</option>
+          <option value="french">🇫🇷 French</option>
+          <option value="german">🇩🇪 German</option>
+          <option value="japanese">🇯🇵 Japanese</option>
+        </select>
+        <div class="xp-badge">
+          <span>⭐</span>
+          <span id="xp-display">0 XP</span>
+        </div>
+      </div>
+    </header>
+
+    <nav class="nav">
+      <button class="nav-btn active" data-tab="dashboard">📊 Dashboard</button>
+      <button class="nav-btn" data-tab="lessons">📚 Lessons</button>
+      <button class="nav-btn" data-tab="flashcards">🃏 Flashcards</button>
+      <button class="nav-btn" data-tab="quiz">✅ Quiz</button>
+      <button class="nav-btn" data-tab="progress">📈 Progress</button>
+    </nav>
+
+    <!-- Dashboard -->
+    <section id="dashboard" class="tab active">
+      <div class="welcome-card">
+        <h2 id="greeting">Ready to learn today? 🎯</h2>
+        <p>Practice makes perfect. Let's continue your language journey!</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-icon">🔥</span>
+          <div>
+            <h3>Day Streak</h3>
+            <p class="stat-value" id="streak-display">0</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-icon">📚</span>
+          <div>
+            <h3>Lessons Done</h3>
+            <p class="stat-value" id="lessons-display">0</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-icon">🃏</span>
+          <div>
+            <h3>Words Learned</h3>
+            <p class="stat-value" id="words-display">0</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-icon">🎯</span>
+          <div>
+            <h3>Quiz Avg</h3>
+            <p class="stat-value" id="avg-display">0%</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="panel">
+          <h3>Today's Focus</h3>
+          <div id="daily-focus">
+            <p><strong>Category:</strong> <span id="focus-category">Vocabulary</span></p>
+            <p><strong>Goal:</strong> <span id="focus-goal">Learn 10 new words</span></p>
+            <button class="button button-primary" onclick="switchTab('lessons')">Start Learning →</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Recent Activity</h3>
+          <div id="recent-activity"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lessons -->
+    <section id="lessons" class="tab">
+      <div class="lessons-container">
+        <h2>Choose a Category</h2>
+        <div class="category-grid">
+          <button class="category-btn" data-category="vocabulary">
+            <span class="category-icon">📖</span>
+            <h3>Vocabulary</h3>
+            <p>Essential words for daily conversation</p>
+          </button>
+          <button class="category-btn" data-category="grammar">
+            <span class="category-icon">📝</span>
+            <h3>Grammar</h3>
+            <p>Rules and sentence structure</p>
+          </button>
+          <button class="category-btn" data-category="phrases">
+            <span class="category-icon">💬</span>
+            <h3>Common Phrases</h3>
+            <p>Useful expressions for real situations</p>
+          </button>
+          <button class="category-btn" data-category="listening">
+            <span class="category-icon">👂</span>
+            <h3>Listening</h3>
+            <p>Improve your comprehension skills</p>
+          </button>
+        </div>
+
+        <div class="lessons-list" id="lessons-list"></div>
+      </div>
+    </section>
+
+    <!-- Flashcards -->
+    <section id="flashcards" class="tab">
+      <div class="flashcards-container">
+        <h2>Flashcard Practice</h2>
+
+        <div class="flashcard-setup" id="flashcard-setup">
+          <div class="form-group">
+            <label>Choose Category</label>
+            <select id="flashcard-category">
+              <option value="all">All Categories</option>
+              <option value="vocabulary">Vocabulary</option>
+              <option value="grammar">Grammar</option>
+              <option value="phrases">Phrases</option>
+            </select>
+          </div>
+          <button class="button button-primary button-large" onclick="startFlashcards()">Start Practice</button>
+        </div>
+
+        <div class="flashcard-area" id="flashcard-area" style="display: none;">
+          <div class="flashcard" id="flashcard" onclick="flipFlashcard()">
+            <div class="flashcard-inner">
+              <div class="flashcard-front">
+                <h3 id="fc-word">Hello</h3>
+                <p id="fc-category">Greeting</p>
+                <button class="speak-btn" onclick="event.stopPropagation(); speakWord()">🔊 Play</button>
+              </div>
+              <div class="flashcard-back">
+                <h3 id="fc-translation">Hola</h3>
+                <p id="fc-type">Spanish</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="flashcard-controls">
+            <button class="button button-secondary" onclick="prevFlashcard()">← Previous</button>
+            <button class="button button-primary" onclick="flipFlashcard()">Flip Card</button>
+            <button class="button button-secondary" onclick="nextFlashcard()">Next →</button>
+          </div>
+
+          <div class="flashcard-progress">
+            <div class="progress-bar">
+              <div class="progress-fill" id="fc-progress"></div>
+            </div>
+            <p id="fc-count">1 / 10</p>
+          </div>
+
+          <button class="button button-secondary" onclick="endFlashcards()">End Practice</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quiz -->
+    <section id="quiz" class="tab">
+      <div class="quiz-container">
+        <h2>Test Your Knowledge</h2>
+
+        <div class="quiz-setup" id="quiz-setup">
+          <div class="form-group">
+            <label>Difficulty Level</label>
+            <select id="quiz-difficulty">
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Number of Questions</label>
+            <select id="quiz-questions">
+              <option value="5">5 Questions</option>
+              <option value="10">10 Questions</option>
+              <option value="15">15 Questions</option>
+            </select>
+          </div>
+          <button class="button button-primary button-large" onclick="startQuiz()">Start Quiz</button>
+        </div>
+
+        <div class="quiz-area" id="quiz-area" style="display: none;">
+          <div class="quiz-header">
+            <span id="quiz-qnum">Question 1/10</span>
+            <span id="quiz-score">Score: 0</span>
+          </div>
+
+          <div class="question-card">
+            <h3 id="question-text">What is "Hello" in Spanish?</h3>
+            <div class="answers-grid" id="answers-grid"></div>
+          </div>
+
+          <div class="quiz-feedback" id="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-results" id="quiz-results" style="display: none;">
+          <h2>Quiz Complete! 🎉</h2>
+          <div class="results-stats">
+            <div class="result-stat">
+              <span class="result-label">Score</span>
+              <span class="result-value" id="final-score">8/10</span>
+            </div>
+            <div class="result-stat">
+              <span class="result-label">Accuracy</span>
+              <span class="result-value" id="accuracy">80%</span>
+            </div>
+            <div class="result-stat">
+              <span class="result-label">XP Earned</span>
+              <span class="result-value" id="xp-earned">+80 XP</span>
+            </div>
+          </div>
+          <button class="button button-primary" onclick="switchTab('dashboard')">Back to Dashboard</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Progress -->
+    <section id="progress" class="tab">
+      <div class="progress-container">
+        <h2>Your Progress</h2>
+
+        <div class="progress-overview">
+          <div class="progress-card">
+            <h3>Overall Progress</h3>
+            <div class="circular-progress">
+              <svg viewBox="0 0 36 36">
+                <path class="progress-ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                <path class="progress-ring-fill" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+              </svg>
+              <span class="progress-percent" id="overall-progress">0%</span>
+            </div>
+          </div>
+
+          <div class="progress-card">
+            <h3>By Category</h3>
+            <div class="category-progress">
+              <div class="cat-item">
+                <span>Vocabulary</span>
+                <div class="progress-bar">
+                  <div class="progress-fill" id="vocab-progress"></div>
+                </div>
+                <span id="vocab-percent">0%</span>
+              </div>
+              <div class="cat-item">
+                <span>Grammar</span>
+                <div class="progress-bar">
+                  <div class="progress-fill" id="grammar-progress"></div>
+                </div>
+                <span id="grammar-percent">0%</span>
+              </div>
+              <div class="cat-item">
+                <span>Phrases</span>
+                <div class="progress-bar">
+                  <div class="progress-fill" id="phrases-progress"></div>
+                </div>
+                <span id="phrases-percent">0%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="achievements-section">
+          <h3>🏆 Achievements</h3>
+          <div class="achievements-grid" id="achievements"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
