@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flashcard Quiz</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">Study smarter</p>
+        <h1>Flashcard Quiz</h1>
+      </div>
+
+      <button id="add-card-button" class="button primary">
+        + Add Card
+      </button>
+    </header>
+
+    <section class="status-bar" aria-live="polite">
+      <span id="progress-text">Loading...</span>
+      <span id="score-text">Score: 0 / 0</span>
+    </section>
+
+    <p id="message" class="message"></p>
+
+    <section class="flashcard">
+      <p id="card-side" class="card-side">Question</p>
+
+      <h2 id="card-content">Loading questions...</h2>
+
+      <div id="answer-options" class="answer-options"></div>
+
+      <button id="show-answer-button" class="button show-answer">
+        Show Answer
+      </button>
+
+      <button id="check-answer-button" class="button primary hidden">
+        Check Answer
+      </button>
+
+      <button id="try-again-button" class="button secondary hidden">
+        Try Again
+      </button>
+    </section>
+
+    <nav class="controls" aria-label="Flashcard navigation">
+      <button id="previous-button" class="button secondary">
+        Previous
+      </button>
+
+      <button id="shuffle-button" class="button secondary">
+        Random Questions
+      </button>
+
+      <button id="next-button" class="button secondary">
+        Next
+      </button>
+    </nav>
+
+    <section class="management-controls">
+      <button id="edit-card-button" class="button secondary">
+        Edit Card
+      </button>
+
+      <button id="delete-card-button" class="button danger">
+        Delete Card
+      </button>
+
+      <button id="reset-button" class="button secondary">
+        New Random Order
+      </button>
+
+      <button id="reset-score-button" class="button secondary">
+        Reset Score
+      </button>
+    </section>
+  </main>
+
+  <dialog id="card-dialog">
+    <form id="card-form">
+      <div class="dialog-header">
+        <h2 id="dialog-title">Add Flashcard</h2>
+
+        <button
+          id="close-dialog-button"
+          type="button"
+          class="close-button"
+          aria-label="Close dialog"
+        >
+          ×
+        </button>
+      </div>
+
+      <label for="question-input">Question</label>
+      <textarea
+        id="question-input"
+        placeholder="Enter the question"
+        required
+      ></textarea>
+
+      <label for="answer-input">Correct Answer</label>
+      <input
+        id="answer-input"
+        type="text"
+        placeholder="Enter the correct answer"
+        required
+      />
+
+      <label for="option-two-input">Wrong Option 1</label>
+      <input
+        id="option-two-input"
+        type="text"
+        placeholder="Enter wrong option 1"
+        required
+      />
+
+      <label for="option-three-input">Wrong Option 2</label>
+      <input
+        id="option-three-input"
+        type="text"
+        placeholder="Enter wrong option 2"
+        required
+      />
+
+      <label for="option-four-input">Wrong Option 3</label>
+      <input
+        id="option-four-input"
+        type="text"
+        placeholder="Enter wrong option 3"
+        required
+      />
+
+      <div class="dialog-actions">
+        <button id="cancel-button" type="button" class="button secondary">
+          Cancel
+        </button>
+
+        <button type="submit" class="button primary">
+          Save Flashcard
+        </button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
